@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <main style="padding: 20px;">
+        <h1>Login</h1>
+        <form id="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="login-email" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="login-password" required><br><br>
+
+            <button type="submit">Log In</button>
+        </form>
+        <p id="message" style="color: red;"></p>
+    </main>
+    <div id="footer-container"></div>
+
+    <script type="module">
+        import createNavbar from './navbar.js';
+        import createFooter from './footer.js';
+
+        document.getElementById('navbar-container').innerHTML = createNavbar();
+        document.getElementById('footer-container').innerHTML = createFooter();
+
+        const loginForm = document.getElementById('login-form');
+        const message = document.getElementById('message');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const storedUserString = localStorage.getItem('user');
+            if (!storedUserString) {
+                message.textContent = 'No user found. Please signup first.';
+                return;
+            }
+
+            const storedUser = JSON.parse(storedUserString);
+
+            if (storedUser.email === email && storedUser.password === password) {
+                localStorage.setItem('isLoggedIn', 'true');
+                
+                message.textContent = 'Login successful! Redirecting to Todos...';
+                message.style.color = 'green';
+                
+                setTimeout(() => {
+                    window.location.href = 'todos.html';
+                }, 1000);
+
+            } else {
+                message.textContent = 'Invalid email or password.';
+            }
+        });
+    </script>
+</body>
+</html>
