@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <main style="padding: 20px;">
+        <h1>Signup</h1>
+        <form id="signup-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required><br><br>
+
+            <button type="submit">Sign Up</button>
+        </form>
+        <p id="message" style="color: red;"></p>
+    </main>
+    <div id="footer-container"></div>
+
+    <script type="module">
+        import createNavbar from './navbar.js';
+        import createFooter from './footer.js';
+
+        document.getElementById('navbar-container').innerHTML = createNavbar();
+        document.getElementById('footer-container').innerHTML = createFooter();
+
+        const signupForm = document.getElementById('signup-form');
+        const message = document.getElementById('message');
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (username.length < 3 || password.length < 6) {
+                message.textContent = 'Username must be at least 3 chars, Password 6 chars.';
+                return;
+            }
+
+            const newUser = { username, email, password };
+            
+            localStorage.setItem('user', JSON.stringify(newUser));
+
+            message.textContent = 'Signup successful! Redirecting to login...';
+            message.style.color = 'green';
+            
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
