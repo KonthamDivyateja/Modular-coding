@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <main style="padding: 20px;">
+        <h1>Welcome to the Modular Todo Application!</h1>
+        <p>This is the home page. Please navigate to Signup or Login.</p>
+    </main>
+    <div id="footer-container"></div>
+
+    <script type="module">
+        import createNavbar from './navbar.js';
+        import createFooter from './footer.js';
+
+        document.getElementById('navbar-container').innerHTML = createNavbar();
+
+        document.getElementById('footer-container').innerHTML = createFooter();
+    </script>
+</body>
+</html>
